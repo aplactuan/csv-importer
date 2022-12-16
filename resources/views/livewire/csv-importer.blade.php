@@ -1,4 +1,11 @@
-<div class="relative z-10">
+<div
+    class="relative z-10"
+    x-data="{
+        open: @entangle('open')
+    }"
+    x-show="open"
+    x-cloak
+>
     <div class="fixed inset-0"></div>
 
     <div class="fixed inset-0 overflow-hidden">
@@ -9,8 +16,9 @@
                         <div class="py-6 px-4 sm:px-6">
                             <div class="flex items-center justify-between">
                                 <h2 class="text-lg font-medium">Import</h2>
+                                {{ $model }}
                                 <div class="ml-3 flex h-7 items-center">
-                                    <button type="button" class="rounded-md text-indigo-200 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-white">
+                                    <button type="button" class="rounded-md text-indigo-200 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-white" wire:click="toggle">
                                         <span class="sr-only">Close panel</span>
                                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

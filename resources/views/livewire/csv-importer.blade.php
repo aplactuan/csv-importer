@@ -16,7 +16,6 @@
                         <div class="py-6 px-4 sm:px-6">
                             <div class="flex items-center justify-between">
                                 <h2 class="text-lg font-medium">Import</h2>
-                                {{ $model }}
                                 <div class="ml-3 flex h-7 items-center">
                                     <button type="button" class="rounded-md text-indigo-200 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-white" wire:click="toggle">
                                         <span class="sr-only">Close panel</span>
@@ -40,7 +39,7 @@
                                                 <div class="flex text-sm text-gray-600">
                                                     <label for="file" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                         <span>Upload a file</span>
-                                                        <input id="file" name="file" type="file" class="sr-only">
+                                                        <input id="file" name="file" wire:model="file" type="file" class="sr-only">
                                                     </label>
                                                     <p class="pl-1">or drag and drop</p>
                                                 </div>
@@ -51,7 +50,9 @@
                                         </div>
                                     </div>
 
-                                    <span class="mt-2 text-red-500 font-medium text-sm">Validation error</span>
+                                    @error('file')
+                                    <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
+                                    @enderror
                                     <!-- End file drop -->
 
                                     <!-- Column selection -->

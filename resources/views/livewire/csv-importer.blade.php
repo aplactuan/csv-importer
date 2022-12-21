@@ -31,7 +31,24 @@
                                 <div class="p-4 sm:p-6">
                                     <div>
                                         <!-- File drop -->
-                                        <div class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md">
+                                        <div
+                                            x-bind:class=" {
+                                                'border-gray-300': !dropping,
+                                                'border-gray-400': dropping
+                                            }"
+                                            x-on:dragover.prevent = "dropping = true"
+                                            x-on:dragleave.prevent="dropping = false"
+                                            x-on:drop="dropping = false"
+                                            x-on:drop.prevent="handleDrop($event)"
+                                            x-data = "{
+                                                dropping: false,
+
+                                                handleDrop(event) {
+                                                    @this.upload('file', event.dataTransfer.files[0])
+                                                }
+                                            }"
+                                            class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md"
+                                        >
                                             <div class="space-y-1 text-center">
                                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />

@@ -71,7 +71,7 @@
                                     <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
                                     @enderror
                                     <!-- End file drop -->
-
+                                    @json($fileHeaders)
                                     <!-- Column selection -->
                                     {{-- If file uloaded --}}
                                     <div class="mt-8">

@@ -16,11 +16,20 @@ class CsvImporter extends Component
 
     public array $fileHeaders = [];
 
+    public array $columnsToMap = [];
+
     public $file;
 
     protected $listeners = [
         'toggle'
     ];
+
+    public function mount()
+    {
+        $this->columnsToMap = collect($this->columnsToMap)
+            ->mapWithKeys(fn ($column) => [$column => ''])
+            ->toArray();
+    }
 
     public function toggle()
     {

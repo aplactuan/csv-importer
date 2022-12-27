@@ -71,33 +71,32 @@
                                     <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
                                     @enderror
                                     <!-- End file drop -->
-                                    @json($fileHeaders)
                                     <!-- Column selection -->
-                                    {{-- If file uloaded --}}
-                                    <div class="mt-8">
+                                    @if($fileHeaders)
+                                        <div class="mt-8">
                                         <h2 class="font-medium">Match columns</h2>
 
                                         <div class="mt-4 space-y-5">
-                                            {{-- Foreach columns to map --}}
-                                            <div class="grid grid-cols-4 gap-4 items-start">
-                                                <label for="" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2 col-span-1">
-                                                    Column label*
-                                                </label>
-                                                <div class="mt-1 sm:mt-0 sm:col-span-3">
-                                                    <select type="text" name="" id="" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
-                                                        <option value="">Don't import</option>
-                                                        {{-- Foreach file headers --}}
-                                                        <option value="">Column</option>
-                                                        {{-- End foreach file headers --}}
-                                                    </select>
+                                            @foreach($columnsToMap as $column => $value)
+                                                <div class="grid grid-cols-4 gap-4 items-start">
+                                                    <label for="{{ $column }}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2 col-span-1">
+                                                        {{ $column }}*
+                                                    </label>
+                                                    <div class="mt-1 sm:mt-0 sm:col-span-3">
+                                                        <select type="text" wire:model.defer="columnsToMap.{{ $column }}" name="{{ $column }}" id="{{ $column }}" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
+                                                            <option value="">Don't import</option>
+                                                            @foreach($fileHeaders as $header)
+                                                                <option value="{{ $header }}">{{ $header }}</option>
+                                                            @endforeach
+                                                        </select>
 
-                                                    <span class="mt-2 text-red-500 font-medium text-sm">Validation error</span>
+                                                        <span class="mt-2 text-red-500 font-medium text-sm">Validation error</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            {{-- End foreach columns to map --}}
+                                            @endforeach
                                         </div>
                                     </div>
-                                {{-- Endif file uloaded --}}
+                                    @endif
                                 <!-- End columns selection -->
                                 </div>
                             </div>

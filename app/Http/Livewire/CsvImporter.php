@@ -73,6 +73,19 @@ class CsvImporter extends Component
     public function import()
     {
         $this->validate();
+
+        //create an import model
+        $this->makeImport();
+    }
+
+    protected function makeImport()
+    {
+        auth()->user()->imports()->create([
+            'model' => $this->model,
+            'file_path' => $this->file->getRealPath(),
+            'file_name' => $this->file->getClientOriginalName(),
+            'total_rows' => 100
+        ]);
     }
 
     protected function readCsv($filePath): Reader

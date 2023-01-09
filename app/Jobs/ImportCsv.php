@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Import;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -14,12 +15,18 @@ class ImportCsv implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        public Import $import,
+        public string $model,
+        public array $chunk,
+        public array $columns
+    )
     {
         //
     }
@@ -31,6 +38,12 @@ class ImportCsv implements ShouldQueue
      */
     public function handle()
     {
-        logger()->info('Hello');
+        $this->model::upsert(
+            $this->chunk
+            ['id'],
+            collect($this->columns)->diff(['id'])->keys()->toArray()
+        );
+
+        sleep(1);
     }
 }

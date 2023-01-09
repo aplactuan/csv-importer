@@ -88,22 +88,20 @@ class CsvImporter extends Component
     {
         $this->validate();
 
+        $import = $this->makeImport();
         $batches = collect(
             (new ChunkIterator($this->csvRecords->getRecords(), 50))
                 ->get()
-        )->map(function ($chunk) {
-                return new ImportCsv();
+        )->map(function ($chunk) use ($import) {
+                return new ImportCsv($import, $this->model, $chunk, $this->columnsToMap);
             })->toArray();
 
         Bus::batch($batches)->dispatch();
-
-        //create an import model
-        $this->makeImport();
     }
 
     protected function makeImport()
     {
-        auth()->user()->imports()->create([
+        return auth()->user()->imports()->create([
             'model' => $this->model,
             'file_path' => $this->file->getRealPath(),
             'file_name' => $this->file->getClientOriginalName(),

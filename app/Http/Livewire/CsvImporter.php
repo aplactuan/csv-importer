@@ -96,7 +96,11 @@ class CsvImporter extends Component
                 return new ImportCsv($import, $this->model, $chunk, $this->columnsToMap);
             })->toArray();
 
-        Bus::batch($batches)->dispatch();
+        Bus::batch($batches)
+            ->finally(function () use ($import) {
+                $import->touch('completed_at');
+            })
+            ->dispatch();
     }
 
     protected function makeImport()

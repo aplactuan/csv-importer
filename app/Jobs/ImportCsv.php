@@ -38,7 +38,6 @@ class ImportCsv implements ShouldQueue
      */
     public function handle()
     {
-        $columns = collect($this->columns)->diff('id')->keys()->toArray();
         $affectedRows = $this->model::upsert(
             $this->chunk,
             ['id'],

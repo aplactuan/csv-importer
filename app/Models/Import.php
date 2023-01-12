@@ -21,4 +21,9 @@ class Import extends Model
     protected $casts = [
         'completed_at' => 'datetime'
     ];
+
+    public function percentCompleted(): int
+    {
+        return floor(($this->processed_rows / $this->total_rows) * 100);
+    }
 }

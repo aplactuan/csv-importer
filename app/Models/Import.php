@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Import extends Model
 {
@@ -21,6 +22,16 @@ class Import extends Model
     protected $casts = [
         'completed_at' => 'datetime'
     ];
+
+    public function scopeNotCompleted(Builder $query)
+    {
+        $query->whereNull('completed_at');
+    }
+
+    public function scopeForModel(Builder $query, string $model)
+    {
+        $query->where('model', $model);
+    }
 
     public function percentCompleted(): int
     {

@@ -107,6 +107,10 @@ class CsvImporter extends Component
                 $import->touch('completed_at');
             })
             ->dispatch();
+
+        $this->resetExcept(['model', 'open', 'columnsToMap', 'columnLabels', 'requiredColumn']);
+
+        $this->emitTo('csv-imports', 'imports.refresh');
     }
 
     protected function makeImport()

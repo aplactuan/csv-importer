@@ -1,4 +1,4 @@
-<div>
+<div wire:poll.1s.visible>
     @foreach($this->imports as $import)
     <div class="p-6">
         <div>

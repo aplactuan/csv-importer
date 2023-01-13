@@ -104,7 +104,7 @@
                         </div>
 
                         {{-- csv-imports component goes here --}}
-                        <livewire:csv-imports />
+                        <livewire:csv-imports :model="$model" />
 
                         <div class="flex flex-shrink-0 justify-end px-4 py-4">
                             <button
